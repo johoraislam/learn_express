@@ -3,6 +3,8 @@ import { pool } from "../../db";
 const createProfileIntoDB = async (payload: any) => {
   const { user_id, bio, address, phone, gender } = payload;
 
+  
+
   // check user exists or not
   const user = await pool.query(
     `

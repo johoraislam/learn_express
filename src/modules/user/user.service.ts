@@ -1,16 +1,21 @@
 import { pool } from "../../db";
 import type { Iuser } from "./user.interface";
+import bcrypt from "bcryptjs";
 
 const createUserIntoDB = async (payload : Iuser) => {
-    const { name, age, email, is_active } = payload;
+    const { name, age, email, is_active,password } = payload;
+
+    const hasPassword = await bcrypt.hash(password,10)
+
     const result = await pool.query(
       `
       INSERT INTO users (name, age, email, password, is_active)
       VALUES ($1, $2, $3, $4, $5)
       RETURNING *
       `,
-      [name, age, email, "password123", is_active ?? true],
+      [name, age, email, hasPassword, is_active ?? true],
     );
+    delete result.rows[0].password
     return result
 };
 

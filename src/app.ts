@@ -4,8 +4,8 @@ import express, {
   type Response,
 } from "express";
 import { userRouter } from "./modules/user/user.route";
-import { profileControler } from "./modules/profile/profile.controler";
 import { profileRouter } from "./modules/profile/profile.route";
+import { authRouter } from "./modules/auth/auth.route";
 
 const app: Application = express();
 
@@ -25,6 +25,8 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/api/users",userRouter)
 //profile route
 app.use("/api/profile",profileRouter)
+//auth route
+app.use("/api/auth", authRouter)
 
 
 
